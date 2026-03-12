@@ -1,0 +1,429 @@
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import {
+  Calendar,
+  Users,
+  Award,
+  Briefcase,
+  GraduationCap,
+  Mic,
+  ClipboardList,
+  CheckCircle,
+  Bell,
+  MapPin,
+} from "lucide-react";
+import { Footer } from "./Footer";
+import { ScrollToTop } from "./ScrollToTop";
+import { Button } from "./ui/button";
+
+interface EventsPageProps {
+  onNavigate?: (page: string) => void;
+}
+
+export function EventsPage({ onNavigate }: EventsPageProps) {
+  const flagshipEvents = [
+    {
+      title: "Karnataka Placement Conclave",
+      icon: ClipboardList,
+      description:
+        "A state-level annual gathering of placement officers, HR leaders, and institutional heads focused on emerging recruitment trends.",
+      highlights: [
+        "Expert keynote sessions",
+        "Panel discussions on future of work",
+        "Networking opportunities",
+        "Best practices showcase",
+      ],
+    },
+    {
+      title: "Industry–Academia Summit",
+      icon: Mic,
+      description:
+        "An interactive forum for policy discussions, skill alignment, and hiring outlook analysis.",
+      highlights: [
+        "Policy roundtables",
+        "Skill gap analysis",
+        "Industry trend presentations",
+        "Collaborative workshops",
+      ],
+    },
+    {
+      title: "Recruiters Meet",
+      icon: Users,
+      description:
+        "A centralized networking platform connecting recruiters with multiple institutions under one umbrella.",
+      highlights: [
+        "Multi-institution engagement",
+        "Direct recruiter access",
+        "Recruitment drive coordination",
+        "Talent pool showcasing",
+      ],
+    },
+    {
+      title: "Placement Excellence Awards",
+      icon: Award,
+      description:
+        "Recognition for Best Placement Officer, Best Emerging Institution, Outstanding Industry Partner and more.",
+      highlights: [
+        "Multiple award categories",
+        "Peer-nominated recognition",
+        "Best practice awards",
+        "Innovation spotlights",
+      ],
+    },
+  ];
+
+  const upcomingEvents = [
+    {
+      date: "March 15-16, 2026",
+      title: "Karnataka Placement Conclave 2026",
+      location: "Bengaluru",
+      status: "Registration Open",
+      type: "Flagship Event",
+    },
+    {
+      date: "April 22, 2026",
+      title: "Regional TPO Workshop - North Karnataka",
+      location: "Hubballi",
+      status: "Coming Soon",
+      type: "Workshop",
+    },
+    {
+      date: "May 10, 2026",
+      title: "Industry-Academia Summit",
+      location: "Mysuru",
+      status: "Save the Date",
+      type: "Summit",
+    },
+  ];
+
+  const studentInitiatives = [
+    {
+      title: "Career Readiness Program",
+      icon: GraduationCap,
+      items: [
+        "Resume building workshops",
+        "Mock interviews",
+        "Group discussion training",
+        "Corporate etiquette sessions",
+      ],
+    },
+    {
+      title: "Industry Mentorship Program",
+      icon: Users,
+      description:
+        "Pairing students with industry mentors for career guidance and professional exposure.",
+    },
+    {
+      title: "Internship Facilitation Drive",
+      icon: Briefcase,
+      description:
+        "Connecting institutions with companies offering structured internship opportunities.",
+    },
+  ];
+
+  const regularActivities = [
+    {
+      title: "Regional Industry Meets",
+      description:
+        "Localized networking forums to strengthen district-level collaborations.",
+      frequency: "Quarterly",
+    },
+    {
+      title: "Training & Certification Programs",
+      description:
+        "Skill enhancement programs for students and placement teams.",
+      frequency: "Monthly",
+    },
+    {
+      title: "Knowledge Exchange Forums",
+      description:
+        "Panel discussions and workshops focused on recruitment strategies and employability metrics.",
+      frequency: "Bi-monthly",
+    },
+  ];
+
+  return (
+    <div className="bg-white">
+      {/* Annual Flagship Events */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[hsl(var(--gold))] font-semibold tracking-widest text-sm mb-3">
+              PROGRAMS & ACTIVITIES
+            </p>
+            <h2
+              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-serif"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              Annual Flagship Events
+            </h2>
+            <p className="text-lg text-gray-600">
+              Premier gatherings that shape Karnataka's
+              placement ecosystem
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {flagshipEvents.map((event, index) => {
+              const Icon = event.icon;
+
+              return (
+                <Card
+                  key={index}
+                  className="bg-white border border-gray-200 shadow-lg hover:shadow-xl transition-all"
+                >
+                  <CardHeader>
+                    <div className="flex items-start gap-4">
+                      <div className="w-14 h-14 bg-[hsl(var(--navy))] rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Icon className="h-7 w-7 text-[hsl(var(--gold))]" />
+                      </div>
+                      <CardTitle className="text-xl text-gray-900 pt-2">
+                        {event.title}
+                      </CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 mb-4">
+                      {event.description}
+                    </p>
+                    {event.highlights && (
+                      <div className="mt-4">
+                        <p className="text-sm font-semibold text-gray-800 mb-2">
+                          Key Highlights:
+                        </p>
+                        <ul className="space-y-2">
+                          {event.highlights.map(
+                            (highlight, idx) => (
+                              <li
+                                key={idx}
+                                className="text-sm text-gray-600 flex items-start gap-2"
+                              >
+                                <CheckCircle className="h-4 w-4 text-[hsl(var(--gold))] flex-shrink-0 mt-0.5" />
+                                {highlight}
+                              </li>
+                            ),
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Upcoming Events */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[hsl(var(--gold))] font-semibold tracking-widest text-sm mb-3">
+              WHAT'S NEXT
+            </p>
+            <h2
+              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-serif"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              Upcoming Events
+            </h2>
+            <p className="text-lg text-gray-600">
+              Mark your calendars for these important dates
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {upcomingEvents.map((event, index) => (
+              <Card
+                key={index}
+                className="bg-white border-2 border-gray-200 shadow-lg hover:shadow-xl transition-all"
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <span
+                      className={`text-xs font-bold px-3 py-1 rounded-full ${
+                        event.status === "Registration Open"
+                          ? "bg-green-100 text-green-700"
+                          : event.status === "Coming Soon"
+                            ? "bg-blue-100 text-blue-700"
+                            : "bg-gray-100 text-gray-700"
+                      }`}
+                    >
+                      {event.status}
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="flex-shrink-0 gradient-gold p-3 rounded-lg">
+                      <Calendar className="h-6 w-6 text-black" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm text-[hsl(var(--gold))] font-semibold mb-2">
+                        {event.type}
+                      </p>
+                      <h3 className="text-lg font-bold text-gray-900">
+                        {event.title}
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="space-y-2 mb-4">
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <Calendar className="h-4 w-4 text-gray-400" />
+                      <span>{event.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <MapPin className="h-4 w-4 text-gray-400" />
+                      <span>{event.location}</span>
+                    </div>
+                  </div>
+                  {event.status === "Registration Open" && (
+                    <Button
+                      className="w-full gradient-gold text-black hover:opacity-90 transition-opacity"
+                      onClick={() => onNavigate?.("registration")}
+                    >
+                      Join KTPOA
+                    </Button>
+                  )}
+                  {event.status === "Coming Soon" && (
+                    <Button
+                      variant="outline"
+                      className="w-full border-[hsl(var(--gold))] text-[hsl(var(--gold))] hover:bg-[hsl(var(--gold))]/10"
+                    >
+                      <Bell className="h-4 w-4 mr-2" />
+                      Notify Me
+                    </Button>
+                  )}
+                  {event.status === "Save the Date" && (
+                    <Button
+                      variant="outline"
+                      className="w-full border-gray-300 text-gray-700 hover:bg-gray-50"
+                    >
+                      Learn More
+                    </Button>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Student-Centric Initiatives */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[hsl(var(--gold))] font-semibold tracking-widest text-sm mb-3">
+              FOR STUDENTS
+            </p>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Student-Centric Initiatives
+            </h2>
+            <p className="text-lg text-gray-600">
+              Empowering the next generation of professionals
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {studentInitiatives.map((initiative, index) => {
+              const Icon = initiative.icon;
+              return (
+                <Card
+                  key={index}
+                  className="bg-white border border-gray-200 shadow-lg hover:shadow-xl transition-all"
+                >
+                  <CardHeader>
+                    <div className="flex flex-col items-center text-center">
+                      <div className="gradient-gold w-14 h-14 rounded-full flex items-center justify-center mb-3">
+                        <Icon className="h-7 w-7 text-black" />
+                      </div>
+                      <CardTitle className="text-lg">
+                        {initiative.title}
+                      </CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    {initiative.items ? (
+                      <div>
+                        <p className="text-sm text-gray-700 mb-3">
+                          A structured framework including:
+                        </p>
+                        <ul className="space-y-2">
+                          {initiative.items.map((item, idx) => (
+                            <li
+                              key={idx}
+                              className="text-sm text-gray-600 flex items-start gap-2"
+                            >
+                              <span className="text-[hsl(var(--gold))] mt-1">
+                                •
+                              </span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : (
+                      <p className="text-sm text-gray-700">
+                        {initiative.description}
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Regular Programs & Activities */}
+      <section className="py-16 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[hsl(var(--gold))] font-semibold tracking-widest text-sm mb-3">
+              YEAR-ROUND ENGAGEMENT
+            </p>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Regular Programs & Activities
+            </h2>
+            <p className="text-lg text-gray-600">
+              Continuous engagement throughout the year
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {regularActivities.map((activity, index) => (
+              <Card
+                key={index}
+                className="bg-white border-2 border-gray-200 shadow-lg hover:shadow-xl transition-all"
+              >
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-xl flex items-center gap-3">
+                      <div className="w-10 h-10 gradient-gold rounded-full flex items-center justify-center">
+                        <Calendar className="h-5 w-5 text-black" />
+                      </div>
+                      {activity.title}
+                    </CardTitle>
+                    <span className="text-sm font-semibold text-[hsl(var(--gold))] bg-[hsl(var(--gold))]/10 px-3 py-1 rounded-full">
+                      {activity.frequency}
+                    </span>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-700">
+                    {activity.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Footer onNavigate={onNavigate} />
+      <ScrollToTop currentPage="events" />
+    </div>
+  );
+}
