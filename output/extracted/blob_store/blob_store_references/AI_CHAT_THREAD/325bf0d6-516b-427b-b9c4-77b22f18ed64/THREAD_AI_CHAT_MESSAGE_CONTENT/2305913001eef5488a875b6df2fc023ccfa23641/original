@@ -1,0 +1,1 @@
+{"filePath":"/components/HomePage.tsx","snippetStartLine":434,"tagLine":435,"snippet":"<HeroSection\n        onLearnMore={() =>\n          aboutRef.current?.scrollIntoView({\n            behavior: \"smooth\",\n          })\n        }\n      />","tagName":"HeroSection"}

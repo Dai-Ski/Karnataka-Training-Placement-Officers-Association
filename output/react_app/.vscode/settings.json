@@ -1,0 +1,14 @@
+{
+  "css.customData": [],
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "tailwindCSS.experimental.classRegex": [],
+  "tailwindCSS.files.exclude": [
+    "**/.git/**",
+    "**/node_modules/**",
+    "**/.hg/**"
+  ],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}
