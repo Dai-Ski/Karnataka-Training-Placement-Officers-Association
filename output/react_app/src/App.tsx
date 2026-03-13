@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { Navbar } from "./components/Navbar";
-import { HomePage } from "./components/HomePage";
-import { EventsPage } from "./components/EventsPage";
-import { BenefitsPage } from "./components/BenefitsPage";
-import { FAQPage } from "./components/FAQPage";
-import { ContactPage } from "./components/ContactPage";
-import { RegistrationPage } from "./components/RegistrationPage";
-import { TPORegistrationPage } from "./components/TPORegistrationPage";
-import { IndustryRegistrationPage } from "./components/IndustryRegistrationPage";
-import { StudentRegistrationPage } from "./components/StudentRegistrationPage";
-import { ExecutiveMembersPage } from "./components/ExecutiveMembersPage";
-import { Toaster } from "./components/ui/sonner";
+import { Navbar } from "@/components/layout/Navbar";
+import { HomePage } from "@/pages/Home";
+import { EventsPage } from "@/pages/Events";
+import { BenefitsPage } from "@/pages/Benefits";
+import { FAQPage } from "@/pages/FAQ";
+import { ContactPage } from "@/pages/Contact";
+import { RegistrationPage } from "@/pages/Registration";
+import { TPORegistrationPage } from "@/pages/Registration/TPO";
+import { IndustryRegistrationPage } from "@/pages/Registration/Industry";
+import { StudentRegistrationPage } from "@/pages/Registration/Student";
+import { ExecutiveMembersPage } from "@/pages/ExecutiveMembers";
+import { Toaster } from "@/components/ui/sonner";
 import { motion, AnimatePresence } from "motion/react";
 
 export default function App() {
