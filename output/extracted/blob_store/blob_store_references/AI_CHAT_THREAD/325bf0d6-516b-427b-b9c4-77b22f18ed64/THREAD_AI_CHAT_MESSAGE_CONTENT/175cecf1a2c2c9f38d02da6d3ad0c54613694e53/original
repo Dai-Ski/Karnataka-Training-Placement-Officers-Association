@@ -1,1 +1,0 @@
-{"filePath":"/components/EventsPage.tsx","snippetStartLine":288,"tagLine":289,"snippet":"<p className=\"text-sm text-[hsl(var(--gold))] font-semibold mb-2\">\n                    {event.type}\n                  </p>","tagName":"p"}

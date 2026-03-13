@@ -1,1 +1,0 @@
-{"filePath":"/components/Navbar.tsx","snippetStartLine":124,"tagLine":125,"snippet":"<img\n              src={logoImage}\n              alt=\"KTPOA Logo\"\n              className=\"h-[76px] w-auto drop-shadow-lg cursor-pointer\"\n            />","tagName":"img"}
