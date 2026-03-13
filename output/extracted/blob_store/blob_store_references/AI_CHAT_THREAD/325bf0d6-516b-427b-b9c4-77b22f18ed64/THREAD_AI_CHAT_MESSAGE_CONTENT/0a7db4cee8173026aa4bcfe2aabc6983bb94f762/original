@@ -1,1 +1,0 @@
-{"filePath":"/components/ExecutiveMembersPage.tsx","snippetStartLine":603,"tagLine":604,"snippet":"<div className=\"flex flex-col items-center gap-2\">\n            <span className=\"text-xs\">Executive Members</span>\n            <ArrowRight className=\"h-4 w-4 rotate-90\" />\n          </div>","tagName":"div"}

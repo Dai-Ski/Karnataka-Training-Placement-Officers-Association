@@ -1,1 +1,0 @@
-{"filePath":"/components/Footer.tsx","snippetStartLine":26,"tagLine":27,"snippet":"<img\n                src={logoImage}\n                alt=\"KTPOA Logo\"\n                className=\"h-24 w-auto cursor-pointer\"\n              />","tagName":"img"}
