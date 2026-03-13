@@ -61,7 +61,7 @@ export function Footer({ onNavigate }: FooterProps) {
                 </li>
                 <li>
                   <button
-                    onClick={() => handleLinkClick("members")}
+                    onClick={() => handleLinkClick("executive-members")}
                     className="text-gray-300 hover:text-[#C9A870] transition-colors text-sm"
                   >
                     Executive Members
