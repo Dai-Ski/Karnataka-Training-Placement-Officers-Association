@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { EmailOTPField } from "@/components/shared/EmailOTPField";
 import {
   UserPlus,
   Building,
@@ -17,7 +18,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { submitToGoogleSheets } from "@/utils/googleSheets";
+import { submitRegistration } from "@/utils/api";
 import { toast } from "sonner";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
@@ -31,12 +32,21 @@ export function TPORegistrationPage({
 }: TPORegistrationPageProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [institutionType, setInstitutionType] = useState("");
+  const [verifiedEmail, setVerifiedEmail] = useState("");
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
   ) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    if (!verifiedEmail) {
+      toast.error("Email not verified", {
+        description: "Please verify your email address before submitting.",
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
     const formData = new FormData(e.currentTarget);
     const data = {
@@ -48,7 +58,7 @@ export function TPORegistrationPage({
       institutionTypeOther: formData.get(
         "institutionTypeOther",
       ),
-      email: formData.get("email"),
+      email: verifiedEmail,
       phone: formData.get("phone"),
       city: formData.get("city"),
       state: formData.get("state"),
@@ -56,9 +66,10 @@ export function TPORegistrationPage({
     };
 
     try {
-      const result = await submitToGoogleSheets("tpo", data);
+      const result = await submitRegistration("tpo", data);
 
       if (result.success) {
+        setVerifiedEmail("");
         toast.success("Registration Successful!", {
           description:
             "Thank you for registering. We will review your application and get back to you soon.",
@@ -260,18 +271,13 @@ export function TPORegistrationPage({
 
                 <div>
                   <label
-                    htmlFor="email"
                     className="block text-sm mb-2 text-gray-700"
                   >
                     Email Address{" "}
                     <span className="text-red-500">*</span>
                   </label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="your.email@institution.edu"
-                    required
+                  <EmailOTPField
+                    onVerified={(email) => setVerifiedEmail(email)}
                   />
                 </div>
 
@@ -314,11 +320,12 @@ export function TPORegistrationPage({
                   type="submit"
                   className="w-full bg-[#C9A870] hover:bg-[#B89860] text-black"
                   size="lg"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !verifiedEmail}
+                  title={!verifiedEmail ? "Please verify your email first" : undefined}
                 >
                   {isSubmitting
                     ? "Submitting..."
-                    : "Submit"}
+                    : "Submit Registration"}
                 </Button>
               </form>
             </CardContent>

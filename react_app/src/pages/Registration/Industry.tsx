@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { EmailOTPField } from "@/components/shared/EmailOTPField";
 import {
   Building2,
   Mail,
@@ -17,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { submitToGoogleSheets } from "@/utils/googleSheets";
+import { submitRegistration } from "@/utils/api";
 import { toast } from "sonner";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
@@ -31,12 +32,21 @@ export function IndustryRegistrationPage({
 }: IndustryRegistrationPageProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [industry, setIndustry] = useState("");
+  const [verifiedEmail, setVerifiedEmail] = useState("");
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
   ) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    if (!verifiedEmail) {
+      toast.error("Email not verified", {
+        description: "Please verify your email address before submitting.",
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
     const formData = new FormData(e.currentTarget);
     const data = {
@@ -47,7 +57,7 @@ export function IndustryRegistrationPage({
       companySize: formData.get("companySize"),
       contactPersonName: formData.get("contactPersonName"),
       designation: formData.get("designation"),
-      email: formData.get("email"),
+      email: verifiedEmail,
       phone: formData.get("phone"),
       website: formData.get("website"),
       address: formData.get("address"),
@@ -57,12 +67,13 @@ export function IndustryRegistrationPage({
     };
 
     try {
-      const result = await submitToGoogleSheets(
+      const result = await submitRegistration(
         "industry",
         data,
       );
 
       if (result.success) {
+        setVerifiedEmail("");
         toast.success("Registration Successful!", {
           description:
             "Thank you for registering. Our team will contact you soon to discuss partnership opportunities.",
@@ -275,18 +286,13 @@ export function IndustryRegistrationPage({
 
                 <div>
                   <label
-                    htmlFor="email"
                     className="block text-sm mb-2 text-gray-700"
                   >
                     Email Address{" "}
                     <span className="text-red-500">*</span>
                   </label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="your.email@company.com"
-                    required
+                  <EmailOTPField
+                    onVerified={(email) => setVerifiedEmail(email)}
                   />
                 </div>
 
@@ -389,13 +395,14 @@ export function IndustryRegistrationPage({
 
                 <Button
                   type="submit"
-                  className="w-full bg-[#1E293B] hover:bg-[#2D3748]"
+                  className="w-full bg-[#1E293B] hover:bg-[#2D3748] disabled:opacity-50"
                   size="lg"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !verifiedEmail}
+                  title={!verifiedEmail ? "Please verify your email first" : undefined}
                 >
                   {isSubmitting
                     ? "Submitting..."
-                    : "Submit"}
+                    : "Submit Registration"}
                 </Button>
               </form>
             </CardContent>
