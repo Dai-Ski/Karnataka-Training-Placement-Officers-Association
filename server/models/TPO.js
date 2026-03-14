@@ -6,7 +6,7 @@ const tpoSchema = new mongoose.Schema({
   institution:           { type: String, required: true, trim: true },
   institutionType:       { type: String, required: true },
   institutionTypeOther:  { type: String, default: '' },
-  email:                 { type: String, required: true, lowercase: true, trim: true },
+  email:                 { type: String, required: true, lowercase: true, trim: true, unique: true },
   phone:                 { type: String, required: true, trim: true },
   city:                  { type: String, required: true, trim: true },
   state:                 { type: String, required: true, trim: true },

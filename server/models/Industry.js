@@ -7,7 +7,7 @@ const industrySchema = new mongoose.Schema({
   companySize:       { type: String, required: true },
   contactPersonName: { type: String, required: true, trim: true },
   designation:       { type: String, required: true, trim: true },
-  email:             { type: String, required: true, lowercase: true, trim: true },
+  email:             { type: String, required: true, lowercase: true, trim: true, unique: true },
   phone:             { type: String, required: true, trim: true },
   website:           { type: String, default: '' },
   address:           { type: String, required: true },

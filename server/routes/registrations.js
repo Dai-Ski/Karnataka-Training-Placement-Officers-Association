@@ -17,6 +17,12 @@ router.post('/industry', async (req, res) => {
     });
   } catch (error) {
     console.error('Industry registration error:', error);
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'This email is already registered.',
+      });
+    }
     res.status(400).json({
       success: false,
       message: error.message || 'Failed to save industry registration.',
@@ -36,6 +42,12 @@ router.post('/tpo', async (req, res) => {
     });
   } catch (error) {
     console.error('TPO registration error:', error);
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'This email is already registered.',
+      });
+    }
     res.status(400).json({
       success: false,
       message: error.message || 'Failed to save TPO registration.',
@@ -55,6 +67,12 @@ router.post('/student', async (req, res) => {
     });
   } catch (error) {
     console.error('Student registration error:', error);
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'This email is already registered.',
+      });
+    }
     res.status(400).json({
       success: false,
       message: error.message || 'Failed to save student registration.',

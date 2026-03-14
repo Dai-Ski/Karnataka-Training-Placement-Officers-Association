@@ -4,6 +4,10 @@ const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const Industry = require('../models/Industry');
+const TPO = require('../models/TPO');
+const Student = require('../models/Student');
+
 // In-memory OTP store: email -> { otp, expiresAt }
 const otpStore = new Map();
 
@@ -19,6 +23,18 @@ router.post('/send', async (req, res) => {
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ success: false, message: 'Invalid email address.' });
+  }
+
+  // Check if email already exists in any collection
+  const qEmail = email.toLowerCase();
+  const exists = await Promise.all([
+    Industry.exists({ email: qEmail }),
+    TPO.exists({ email: qEmail }),
+    Student.exists({ email: qEmail })
+  ]);
+
+  if (exists.some((val) => val !== null)) {
+    return res.status(400).json({ success: false, message: 'This email address is already registered.' });
   }
 
   const otp = generateOTP();
