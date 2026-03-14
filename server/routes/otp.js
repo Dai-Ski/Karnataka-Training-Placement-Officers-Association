@@ -27,7 +27,7 @@ router.post('/send', async (req, res) => {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: 'KTPOA <onboarding@resend.dev>',
+      from: 'KTPOA <notifications@vantagetasks.online>',
       to: [email],
       subject: 'Your KTPOA Email Verification OTP',
       html: `
