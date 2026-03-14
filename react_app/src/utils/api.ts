@@ -10,7 +10,8 @@ export async function submitRegistration(
   data: Record<string, unknown>
 ): Promise<{ success: boolean; message: string }> {
   try {
-    const response = await fetch(`/api/register/${formType}`, {
+    const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+    const response = await fetch(`${API_BASE_URL}/api/register/${formType}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),

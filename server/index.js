@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: '*' })); // Allow all origins for Vercel deployment
 app.use(express.json());
 
 // Routes
