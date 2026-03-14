@@ -38,12 +38,15 @@ export function EmailOTPField({ onVerified, onEmailChange }: EmailOTPFieldProps)
     setOtpState("sending");
 
     try {
-      const res = await fetch("/api/otp/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${API_BASE_URL}/api/otp/send`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ email }),
       });
-      const data = await res.json();
+      const data = await response.json();
 
       if (data.success) {
         setOtpState("waiting");
@@ -71,12 +74,15 @@ export function EmailOTPField({ onVerified, onEmailChange }: EmailOTPFieldProps)
     setOtpState("verifying");
 
     try {
-      const res = await fetch("/api/otp/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${API_BASE_URL}/api/otp/verify`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ email, otp }),
       });
-      const data = await res.json();
+      const data = await response.json();
 
       if (data.success) {
         setOtpState("verified");
