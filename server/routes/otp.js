@@ -26,7 +26,7 @@ router.post('/send', async (req, res) => {
   otpStore.set(email.toLowerCase(), { otp, expiresAt });
 
   try {
-    await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: 'KTPOA <onboarding@resend.dev>',
       to: [email],
       subject: 'Your KTPOA Email Verification OTP',
@@ -55,9 +55,15 @@ router.post('/send', async (req, res) => {
       `,
     });
 
+    if (error) {
+      console.error('Resend API error:', error);
+      otpStore.delete(email.toLowerCase());
+      return res.status(400).json({ success: false, message: error.message || 'Failed to send OTP. Please check your email address.' });
+    }
+
     res.json({ success: true, message: 'OTP sent to your email address.' });
   } catch (error) {
-    console.error('Resend error:', error);
+    console.error('Resend catch error:', error);
     otpStore.delete(email.toLowerCase());
     res.status(500).json({ success: false, message: 'Failed to send OTP. Please try again.' });
   }
