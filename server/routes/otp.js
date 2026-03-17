@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { Resend } = require('resend');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+if (!resend) {
+  console.warn('⚠️ RESEND_API_KEY not found. Email features will be disabled.');
+}
 
 const Industry = require('../models/Industry');
 const TPO = require('../models/TPO');

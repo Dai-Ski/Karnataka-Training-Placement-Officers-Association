@@ -19,7 +19,8 @@ export function AdminLoginPage({ onLogin }: AdminLoginProps) {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/events/admin/login", {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const response = await fetch(`${apiUrl}/api/events/admin/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, password }),
