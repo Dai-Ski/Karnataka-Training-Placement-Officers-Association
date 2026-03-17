@@ -1,5 +1,6 @@
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useIsMobile } from "../hooks/use-mobile";
 const logoImage = '/images/2135abd8723dc81edc9e85faf50aaf699dee149d.png';
 
 interface NavbarProps {
@@ -14,9 +15,15 @@ export function Navbar({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
+      // On mobile, always keep the navbar visible (sticky behaviour)
+      if (isMobile) {
+        setIsVisible(true);
+        return;
+      }
       const currentScrollY = window.scrollY;
       if (currentScrollY < lastScrollY || currentScrollY < 10) {
         setIsVisible(true);
@@ -28,7 +35,8 @@ export function Navbar({
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, [lastScrollY, isMobile]);
+
 
   const navItems = [
     { id: "about", label: "About" },

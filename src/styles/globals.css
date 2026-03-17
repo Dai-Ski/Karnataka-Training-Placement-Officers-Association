@@ -311,15 +311,38 @@ html {
 }
 
 /* ============================================================
-   MOBILE RESPONSIVENESS — 320px – 768px
-   Only layout/spacing is overridden here.
-   Desktop layout and styling remain entirely unchanged.
+   MOBILE FIXES — max-width: 768px
+   Desktop layout is 100 % unchanged above this comment.
+   ============================================================
+
+   Sections:
+   1. Global overflow guards (all viewports)
+   2. Sticky nav — CSS safety net (mobile only)
+   3. Layout & content alignment (768px and below)
+   4. Breakpoint refinements (480 / 414 / 375 / 320)
    ============================================================ */
 
-/* Prevent horizontal scroll on all viewports */
-html,
+
+/* ----------------------------------------------------------
+   1. GLOBAL OVERFLOW GUARDS
+   Prevent horizontal scroll caused by wide children,
+   negative margins, absolute elements, or motion animations.
+   ---------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
 body {
   overflow-x: hidden;
+  max-width: 100vw;
+  position: relative;
 }
 
 #root {
@@ -327,187 +350,200 @@ body {
   max-width: 100%;
 }
 
-/* ── 768px and below (tablets + all phones) ── */
+/* Framer-Motion page transitions briefly push content
+   horizontally — clip it at the page wrapper level */
+.min-h-screen {
+  overflow-x: hidden;
+}
+
+
+/* ----------------------------------------------------------
+   2. STICKY NAV — CSS SAFETY NET
+   Even if the JS scroll-hide logic fires, force the
+   navbar to stay on-screen on mobile via CSS.
+   This works alongside the JS fix in Navbar.tsx.
+   ---------------------------------------------------------- */
 @media (max-width: 768px) {
-  /* Reduce large vertical padding in sections */
-  .py-24 {
-    padding-top: 4rem !important;
-    padding-bottom: 4rem !important;
+  nav.fixed {
+    /* Counteract any -translate-y-full applied by JS */
+    transform: translateY(0) !important;
+    /* Guarantee fixed positioning */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 9999 !important;
+    /* Logo stays on left, hamburger on right */
+    width: 100% !important;
   }
+}
 
-  .py-20 {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
-  }
 
-  .py-16 {
-    padding-top: 2.5rem !important;
-    padding-bottom: 2.5rem !important;
-  }
+/* ----------------------------------------------------------
+   3. LAYOUT & CONTENT ALIGNMENT (≤ 768px)
+   Content containers, sections, grids, cards, text.
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
 
-  /* Horizontal padding on main containers */
+  /* ── Section vertical padding ── */
+  .py-24 { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+  .py-20 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+  .py-16 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+
+  /* ── Container horizontal padding — keep content off edges ── */
   .max-w-7xl,
   .max-w-6xl,
   .max-w-5xl,
   .max-w-4xl,
   .max-w-3xl {
+    width: 100% !important;
     padding-left: 1.25rem !important;
     padding-right: 1.25rem !important;
+    box-sizing: border-box !important;
   }
 
-  /* Navbar inner container on small screens */
+  /* ── Navbar inner row ── */
   nav > div {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
-  /* Ensure footer columns stack cleanly (already grid-cols-1, just fix gap) */
+  /* ── Sections should never overflow ── */
+  section {
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* ── Footer ── */
+  footer {
+    overflow-x: hidden;
+  }
   footer .grid {
     gap: 2rem !important;
   }
 
-  /* Executive member modal max-height safety */
+  /* ── Images — never wider than their container ── */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* ── Decorative absolute blur circles (ExecutiveMembersPage) ──
+     Clip them to prevent the section from growing wider  */
+  section.relative.overflow-hidden {
+    overflow: hidden !important;
+  }
+
+  /* ── Executive member modal ── */
   .max-h-\[90vh\] {
     max-height: 92vh !important;
   }
-}
 
-/* ── 480px and below (phones) ── */
-@media (max-width: 480px) {
-  /* Hero logo — override fixed h-[210px] */
-  .h-\[210px\] {
-    height: 130px !important;
+  /* ── Message-from-president decorative quote marks ── */
+  .absolute.-left-6 {
+    left: -0.25rem !important;
+    top: -1rem !important;
+    overflow: hidden;
   }
-
-  /* Reduce all h-screen sections' top padding */
-  .h-screen.flex.items-center {
-    min-height: 100svh;
+  .absolute.-right-6 {
+    right: -0.25rem !important;
+    bottom: -1rem !important;
+    overflow: hidden;
   }
-
-  /* Section heading sizes */
-  h1.text-4xl,
-  h2.text-4xl,
-  .text-4xl {
-    font-size: 1.75rem !important;
-    line-height: 1.25 !important;
-  }
-
-  h1.text-3xl,
-  h2.text-3xl,
-  .text-3xl {
-    font-size: 1.4rem !important;
-    line-height: 1.3 !important;
-  }
-
-  h1.text-2xl,
-  h2.text-2xl,
-  .text-2xl {
-    font-size: 1.25rem !important;
-  }
-
-  /* Card padding reduction */
-  .p-8 {
-    padding: 1.25rem !important;
-  }
-
-  .p-10 {
-    padding: 1.25rem !important;
-  }
-
-  .p-7 {
-    padding: 1rem !important;
-  }
-
-  /* Stats grid: keep 2 columns */
-  .grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-
-  /* Executive slider quote icon */
-  .h-16.w-16 {
-    height: 2.5rem !important;
-    width: 2.5rem !important;
-  }
-
-  /* Executive slider: large italic message text */
-  .text-xl {
-    font-size: 0.9375rem !important;
-    line-height: 1.6 !important;
-  }
-
-  /* Executive slider: author info — wrap on small screens */
-  .flex.items-center.justify-center.gap-4 {
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-  }
-
-  /* Message-From-President: shrink decorative quote SVGs */
   .absolute.-left-6 > svg,
   .absolute.-right-6 > svg {
     width: 60px !important;
     height: 60px !important;
   }
 
-  /* Prevent decorative marks causing overflow */
-  .absolute.-left-6 {
-    left: -0.25rem !important;
-    top: -1rem !important;
-  }
-
-  .absolute.-right-6 {
-    right: -0.25rem !important;
-    bottom: -1rem !important;
-  }
-
-  /* Events regular activities: stack row content */
+  /* ── Events — regular activities flex row ── */
   .flex.items-center.justify-between.gap-6 {
     flex-wrap: wrap !important;
     gap: 0.75rem !important;
   }
 
-  /* Registration page: wrap icon + h1 header */
+  /* ── Registration header ── */
   .flex.items-center.justify-center.gap-3 {
     flex-wrap: wrap !important;
     text-align: center !important;
   }
 
-  /* Form grids: always stack on mobile */
+  /* ── Form grids: always stack ── */
   .grid.gap-6 {
     grid-template-columns: 1fr !important;
   }
 
-  /* Executive modal: nearly full screen */
+  /* ── Executive modal: full-width on mobile ── */
   .max-w-2xl.w-full {
-    width: 100% !important;
-    margin: 0.5rem !important;
+    width: calc(100% - 1rem) !important;
+    margin: 0.5rem auto !important;
   }
 }
 
-/* ── 414px (iPhone Plus / Android XL) ── */
+
+/* ----------------------------------------------------------
+   4. BREAKPOINT REFINEMENTS
+   ---------------------------------------------------------- */
+
+/* ── 480px (standard phones) ── */
+@media (max-width: 480px) {
+
+  /* Hero logo */
+  .h-\[210px\] { height: 130px !important; }
+
+  /* Section headings */
+  h1.text-4xl, h2.text-4xl, .text-4xl {
+    font-size: 1.75rem !important;
+    line-height: 1.25 !important;
+  }
+  h1.text-3xl, h2.text-3xl, .text-3xl {
+    font-size: 1.4rem !important;
+    line-height: 1.3 !important;
+  }
+  h1.text-2xl, h2.text-2xl, .text-2xl {
+    font-size: 1.2rem !important;
+  }
+
+  /* Card padding */
+  .p-8  { padding: 1.25rem !important; }
+  .p-10 { padding: 1.25rem !important; }
+  .p-7  { padding: 1rem !important; }
+
+  /* Keep stats grid 2-column */
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Executive slider: quote icon */
+  .h-16.w-16 { height: 2.5rem !important; width: 2.5rem !important; }
+
+  /* Executive slider: message text */
+  .text-xl {
+    font-size: 0.9375rem !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Executive slider: author info */
+  .flex.items-center.justify-center.gap-4 {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+}
+
+/* ── 414px (iPhone Plus / large Android) ── */
 @media (max-width: 414px) {
-  .h-\[210px\] {
-    height: 120px !important;
-  }
-
-  /* Section padding tighter */
-  .py-24 {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
-  }
-
-  .py-20 {
-    padding-top: 2.5rem !important;
-    padding-bottom: 2.5rem !important;
-  }
+  .h-\[210px\] { height: 120px !important; }
+  .py-24 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+  .py-20 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
 }
 
-/* ── 375px and below (iPhone, many Android) ── */
+/* ── 375px (standard iPhone / most Android phones) ── */
 @media (max-width: 375px) {
-  .h-\[210px\] {
-    height: 110px !important;
-  }
+  .h-\[210px\] { height: 110px !important; }
 
-  /* Sub-compact padding */
   .max-w-7xl,
   .max-w-6xl,
   .max-w-5xl,
@@ -529,11 +565,9 @@ body {
 
 /* ── 320px (minimum supported width) ── */
 @media (max-width: 320px) {
-  .h-\[210px\] {
-    height: 90px !important;
-  }
+  .h-\[210px\] { height: 90px !important; }
 
-  /* Forced word-wrap to prevent overflow on very narrow screens */
+  /* Force word-wrap on all text */
   h1, h2, h3, h4, p, span, a, button, li {
     word-break: break-word;
     overflow-wrap: break-word;
@@ -543,18 +577,17 @@ body {
     font-size: 1.5rem !important;
     line-height: 1.2 !important;
   }
+  .text-3xl { font-size: 1.25rem !important; }
 
-  .text-3xl {
-    font-size: 1.25rem !important;
-  }
+  .py-24 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+  .py-20 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
 
-  .py-24 {
-    padding-top: 2.5rem !important;
-    padding-bottom: 2.5rem !important;
-  }
-
-  .py-20 {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-5xl,
+  .max-w-4xl,
+  .max-w-3xl {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
   }
 }
