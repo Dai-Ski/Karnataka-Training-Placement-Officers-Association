@@ -35,7 +35,8 @@ export function AdminDashboardPage() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/events");
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const response = await fetch(`${apiUrl}/api/events`);
       const data = await response.json();
       setEvents(data);
     } catch (error) {
@@ -48,7 +49,8 @@ export function AdminDashboardPage() {
   const handleAddEvent = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/events", {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const response = await fetch(`${apiUrl}/api/events`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newEvent),
@@ -74,7 +76,8 @@ export function AdminDashboardPage() {
   const handleDeleteEvent = async (id: string) => {
     if (!confirm("Are you sure you want to delete this event?")) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/events/${id}`, {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const response = await fetch(`${apiUrl}/api/events/${id}`, {
         method: "DELETE",
       });
       if (response.ok) {

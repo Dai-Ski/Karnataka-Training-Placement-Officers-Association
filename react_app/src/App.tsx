@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { HomePage } from "@/pages/Home";
 import { EventsPage } from "@/pages/Events";
@@ -20,6 +20,13 @@ export default function App() {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(
     localStorage.getItem("admin_auth") === "true"
   );
+
+  useEffect(() => {
+    // Basic URL-based routing for admin page
+    if (window.location.pathname === "/admin") {
+      setCurrentPage("admin");
+    }
+  }, []);
 
   const handleNavigation = (page: string) => {
     if (page === "pillars") {
@@ -58,9 +65,6 @@ export default function App() {
           window.scrollTo({ top: y, behavior: "smooth" });
         }
       }, 300);
-    } else if (page === "admin") {
-      setCurrentPage("admin");
-      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       setCurrentPage(page);
       window.scrollTo({ top: 0, behavior: "smooth" });
