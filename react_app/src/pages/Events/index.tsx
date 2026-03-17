@@ -319,10 +319,10 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
                     </div>
                     {event.status === "Registration Open" && (
                       <Button
-                        className="w-full gradient-gold text-black hover:opacity-90 transition-opacity mt-auto"
-                        onClick={() => onNavigate?.("registration")}
+                        variant="outline"
+                        className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 mt-auto"
                       >
-                        Join KTPOA
+                        Learn More
                       </Button>
                     )}
                     {event.status === "Coming Soon" && (
