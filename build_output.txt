@@ -1,0 +1,39 @@
+
+> figma-make-extracted-app@1.0.0 build
+> vite build
+
+vite v5.4.21 building for production...
+transforming...
+node_modules/next-themes/dist/index.module.js (1:1576): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/next-themes/dist/index.module.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/next-themes/dist/index.module.js (1:2992): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/next-themes/dist/index.module.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+✓ 1767 modules transformed.
+x Build failed in 1.39s
+error during build:
+src/components/HomePage.tsx (7:2): "Handshake" is not exported by "node_modules/lucide-react/dist/esm/lucide-react.js", imported by "src/components/HomePage.tsx".
+file: /Users/aditya/Desktop/react_app/src/components/HomePage.tsx:7:2
+
+5: import { QuotationMark } from "./QuotationMark";
+6: import {
+7:   Handshake,
+     ^
+8:   GraduationCap,
+9:   Users,
+
+    at getRollupError (file:///Users/aditya/Desktop/react_app/node_modules/rollup/dist/es/shared/parseAst.js:402:41)
+    at error (file:///Users/aditya/Desktop/react_app/node_modules/rollup/dist/es/shared/parseAst.js:398:42)
+    at Module.error (file:///Users/aditya/Desktop/react_app/node_modules/rollup/dist/es/shared/node-entry.js:17040:16)
+    at Module.traceVariable (file:///Users/aditya/Desktop/react_app/node_modules/rollup/dist/es/shared/node-entry.js:17452:29)
+    at ModuleScope.findVariable (file:///Users/aditya/Desktop/react_app/node_modules/rollup/dist/es/shared/node-entry.js:15070:39)
+    at FunctionScope.findVariable (file:///Users/aditya/Desktop/react_app/node_modules/rollup/dist/es/shared/node-entry.js:5673:38)
+    at FunctionBodyScope.findVariable (file:///Users/aditya/Desktop/react_app/node_modules/rollup/dist/es/shared/node-entry.js:5673:38)
+    at Identifier.bind (file:///Users/aditya/Desktop/react_app/node_modules/rollup/dist/es/shared/node-entry.js:5447:40)
+    at Property.bind (file:///Users/aditya/Desktop/react_app/node_modules/rollup/dist/es/shared/node-entry.js:2829:23)
+    at ObjectExpression.bind (file:///Users/aditya/Desktop/react_app/node_modules/rollup/dist/es/shared/node-entry.js:2825:28)

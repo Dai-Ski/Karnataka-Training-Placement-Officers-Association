@@ -307,7 +307,7 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
                         </h3>
                       </div>
                     </div>
-                    <div className="space-y-2 mb-6 flex-1">
+                    <div className="space-y-2 flex-1">
                       <div className="flex items-center gap-2 text-sm text-gray-600">
                         <Calendar className="h-4 w-4 text-gray-400" />
                         <span>{event.date}</span>
@@ -317,31 +317,6 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
                         <span>{event.location}</span>
                       </div>
                     </div>
-                    {event.status === "Registration Open" && (
-                      <Button
-                        className="w-full gradient-gold text-black hover:opacity-90 transition-opacity mt-auto"
-                        onClick={() => onNavigate?.("registration")}
-                      >
-                        Join KTPOA
-                      </Button>
-                    )}
-                    {event.status === "Coming Soon" && (
-                      <Button
-                        variant="outline"
-                        className="w-full border-[hsl(var(--gold))] text-[hsl(var(--gold))] hover:bg-[hsl(var(--gold))]/10 mt-auto"
-                      >
-                        <Bell className="h-4 w-4 mr-2" />
-                        Notify Me
-                      </Button>
-                    )}
-                    {(event.status === "Save the Date" || (!event.status && event.title)) && (
-                      <Button
-                        variant="outline"
-                        className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 mt-auto"
-                      >
-                        Learn More
-                      </Button>
-                    )}
                   </CardContent>
                 </Card>
               </div>
