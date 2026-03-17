@@ -23,12 +23,21 @@ export default function App() {
 
   useEffect(() => {
     // Basic URL-based routing for admin page
-    if (window.location.pathname === "/admin") {
+    const path = window.location.pathname;
+    if (path === "/admin") {
       setCurrentPage("admin");
+    } else if (path !== "/" && currentPage === "admin") {
+      // If we are on some other path but state is admin, reset to home
+      // (This handles manual URL edits away from /admin)
+      setCurrentPage("home");
     }
   }, []);
 
   const handleNavigation = (page: string) => {
+    // If we're on admin page and navigate away, clear the URL path
+    if (currentPage === "admin" && page !== "admin") {
+      window.history.pushState({}, "", "/");
+    }
     if (page === "pillars") {
       const wasOnHomePage =
         currentPage === "home" || currentPage === "pillars";
