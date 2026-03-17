@@ -19,13 +19,37 @@ import {
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 
 interface EventsPageProps {
   onNavigate?: (page: string) => void;
 }
 
 export function EventsPage({ onNavigate }: EventsPageProps) {
-  const flagshipEvents = [
+  const [events, setEvents] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/events");
+        const data = await response.json();
+        setEvents(data);
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchEvents();
+  }, []);
+
+  const flagshipEvents = events.filter(e => e.section === 'flagship').length > 0 
+    ? events.filter(e => e.section === 'flagship').map(e => ({
+        ...e,
+        icon: e.icon === 'Mic' ? Mic : e.icon === 'Users' ? Users : e.icon === 'Award' ? Award : ClipboardList
+      }))
+    : [
     {
       title: "Karnataka Placement Conclave",
       icon: ClipboardList,
@@ -76,7 +100,9 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
     },
   ];
 
-  const upcomingEvents = [
+  const upcomingEvents = events.filter(e => e.section === 'upcoming').length > 0
+    ? events.filter(e => e.section === 'upcoming')
+    : [
     {
       date: "March 15-16, 2026",
       title: "Karnataka Placement Conclave 2026",
@@ -100,7 +126,13 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
     },
   ];
 
-  const studentInitiatives = [
+  const studentInitiatives = events.filter(e => e.section === 'student').length > 0
+    ? events.filter(e => e.section === 'student').map(e => ({
+        ...e,
+        icon: e.icon === 'Users' ? Users : e.icon === 'Briefcase' ? Briefcase : GraduationCap,
+        items: e.highlights
+      }))
+    : [
     {
       title: "Career Readiness Program",
       icon: GraduationCap,
@@ -125,7 +157,12 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
     },
   ];
 
-  const regularActivities = [
+  const regularActivities = events.filter(e => e.section === 'regular').length > 0
+    ? events.filter(e => e.section === 'regular').map(e => ({
+        ...e,
+        frequency: e.type // Use type as frequency for regular events
+      }))
+    : [
     {
       title: "Regional Industry Meets",
       description:
