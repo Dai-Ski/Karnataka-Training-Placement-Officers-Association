@@ -274,76 +274,77 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory scrollbar-hide no-scrollbar">
             {upcomingEvents.map((event, index) => (
-              <Card
-                key={index}
-                className="bg-white border-2 border-gray-200 shadow-lg hover:shadow-xl transition-all"
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <span
-                      className={`text-xs font-bold px-3 py-1 rounded-full ${
-                        event.status === "Registration Open"
-                          ? "bg-green-100 text-green-700"
-                          : event.status === "Coming Soon"
-                            ? "bg-blue-100 text-blue-700"
-                            : "bg-gray-100 text-gray-700"
-                      }`}
-                    >
-                      {event.status}
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="flex-shrink-0 gradient-gold p-3 rounded-lg">
-                      <Calendar className="h-6 w-6 text-black" />
+              <div key={index} className="flex-none w-[300px] md:w-[380px] snap-center">
+                <Card
+                  className="bg-white border-2 border-gray-200 shadow-lg hover:shadow-xl transition-all h-full"
+                >
+                  <CardContent className="p-6 h-full flex flex-col">
+                    <div className="flex items-start justify-between mb-4">
+                      <span
+                        className={`text-xs font-bold px-3 py-1 rounded-full ${
+                          event.status === "Registration Open"
+                            ? "bg-green-100 text-green-700"
+                            : event.status === "Coming Soon"
+                              ? "bg-blue-100 text-blue-700"
+                              : "bg-gray-100 text-gray-700"
+                        }`}
+                      >
+                        {event.status}
+                      </span>
                     </div>
-                    <div className="flex-1">
-                      <p className="text-sm text-[hsl(var(--gold))] font-semibold mb-2">
-                        {event.type}
-                      </p>
-                      <h3 className="text-lg font-bold text-gray-900">
-                        {event.title}
-                      </h3>
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="flex-shrink-0 gradient-gold p-3 rounded-lg">
+                        <Calendar className="h-6 w-6 text-black" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm text-[hsl(var(--gold))] font-semibold mb-2">
+                          {event.type}
+                        </p>
+                        <h3 className="text-lg font-bold text-gray-900 leading-tight">
+                          {event.title}
+                        </h3>
+                      </div>
                     </div>
-                  </div>
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Calendar className="h-4 w-4 text-gray-400" />
-                      <span>{event.date}</span>
+                    <div className="space-y-2 mb-6 flex-1">
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Calendar className="h-4 w-4 text-gray-400" />
+                        <span>{event.date}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <MapPin className="h-4 w-4 text-gray-400" />
+                        <span>{event.location}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <MapPin className="h-4 w-4 text-gray-400" />
-                      <span>{event.location}</span>
-                    </div>
-                  </div>
-                  {event.status === "Registration Open" && (
-                    <Button
-                      className="w-full gradient-gold text-black hover:opacity-90 transition-opacity"
-                      onClick={() => onNavigate?.("registration")}
-                    >
-                      Join KTPOA
-                    </Button>
-                  )}
-                  {event.status === "Coming Soon" && (
-                    <Button
-                      variant="outline"
-                      className="w-full border-[hsl(var(--gold))] text-[hsl(var(--gold))] hover:bg-[hsl(var(--gold))]/10"
-                    >
-                      <Bell className="h-4 w-4 mr-2" />
-                      Notify Me
-                    </Button>
-                  )}
-                  {event.status === "Save the Date" && (
-                    <Button
-                      variant="outline"
-                      className="w-full border-gray-300 text-gray-700 hover:bg-gray-50"
-                    >
-                      Learn More
-                    </Button>
-                  )}
-                </CardContent>
-              </Card>
+                    {event.status === "Registration Open" && (
+                      <Button
+                        className="w-full gradient-gold text-black hover:opacity-90 transition-opacity mt-auto"
+                        onClick={() => onNavigate?.("registration")}
+                      >
+                        Join KTPOA
+                      </Button>
+                    )}
+                    {event.status === "Coming Soon" && (
+                      <Button
+                        variant="outline"
+                        className="w-full border-[hsl(var(--gold))] text-[hsl(var(--gold))] hover:bg-[hsl(var(--gold))]/10 mt-auto"
+                      >
+                        <Bell className="h-4 w-4 mr-2" />
+                        Notify Me
+                      </Button>
+                    )}
+                    {(event.status === "Save the Date" || (!event.status && event.title)) && (
+                      <Button
+                        variant="outline"
+                        className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 mt-auto"
+                      >
+                        Learn More
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
