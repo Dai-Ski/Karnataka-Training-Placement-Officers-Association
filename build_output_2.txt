@@ -1,0 +1,23 @@
+
+> figma-make-extracted-app@1.0.0 build
+> vite build
+
+vite v5.4.21 building for production...
+transforming...
+node_modules/next-themes/dist/index.module.js (1:1576): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/next-themes/dist/index.module.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/next-themes/dist/index.module.js (1:2992): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/next-themes/dist/index.module.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+✓ 2117 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.46 kB │ gzip:   0.30 kB
+dist/assets/index-BLmSNXgK.css    5.50 kB │ gzip:   1.39 kB
+dist/assets/index-CSqoOsak.js   449.93 kB │ gzip: 130.05 kB
+✓ built in 1.70s

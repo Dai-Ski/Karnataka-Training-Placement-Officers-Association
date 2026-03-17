@@ -1,0 +1,560 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0f172a;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #0f172a;
+  --radius: 0.5rem;
+
+  /* KTPOA Custom Color System - Matched to Figma */
+  --gold: 45 93% 47%; /* #EAB308 */
+  --navy: 222 47% 11%; /* #0F172A */
+  --navy-light: 215 25% 27%; /* #1E293B */
+  
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(
+    --sidebar-primary-foreground
+  );
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(
+    --sidebar-accent-foreground
+  );
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(
+    :not(:has([class*=" text-"]), :not(:has([class^="text-"])))
+  ) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* Sonner Toast Styling - Better visibility */
+[data-sonner-toast] {
+  background-color: white !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-sonner-toast][data-type="success"] {
+  background-color: #f0fdf4 !important;
+  border-color: #86efac !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-icon] {
+  color: #16a34a !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-title] {
+  color: #166534 !important;
+  font-weight: 600 !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-description] {
+  color: #15803d !important;
+}
+
+[data-sonner-toast][data-type="error"] {
+  background-color: #fef2f2 !important;
+  border-color: #fca5a5 !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-icon] {
+  color: #dc2626 !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-title] {
+  color: #991b1b !important;
+  font-weight: 600 !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-description] {
+  color: #b91c1c !important;
+}
+
+[data-sonner-toast][data-type="info"] {
+  background-color: #eff6ff !important;
+  border-color: #93c5fd !important;
+}
+
+[data-sonner-toast][data-type="info"] [data-icon] {
+  color: #2563eb !important;
+}
+
+[data-sonner-toast][data-type="info"] [data-title] {
+  color: #1e40af !important;
+  font-weight: 600 !important;
+}
+
+[data-sonner-toast][data-type="info"] [data-description] {
+  color: #1d4ed8 !important;
+}
+
+/* KTPOA Utility Classes */
+@layer utilities {
+  .gradient-gold {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--gold-dark)),
+      hsl(var(--gold-light)),
+      hsl(var(--gold))
+    );
+  }
+
+  .gradient-navy {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--navy-dark)),
+      hsl(var(--navy))
+    );
+  }
+
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+  }
+
+  .glass-dark {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Custom Animations */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Instagram Icon Gradient Hover */
+.instagram-icon rect,
+.instagram-icon path,
+.instagram-icon line {
+  transition: stroke 0.3s ease-in-out;
+}
+
+.instagram-icon:hover rect,
+.instagram-icon:hover path {
+  stroke: url(#instagram-gradient);
+}
+
+.instagram-icon:hover line {
+  stroke: #DD2A7B;
+}
+
+/* ============================================================
+   MOBILE RESPONSIVENESS — 320px – 768px
+   Only layout/spacing is overridden here.
+   Desktop layout and styling remain entirely unchanged.
+   ============================================================ */
+
+/* Prevent horizontal scroll on all viewports */
+html,
+body {
+  overflow-x: hidden;
+}
+
+#root {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* ── 768px and below (tablets + all phones) ── */
+@media (max-width: 768px) {
+  /* Reduce large vertical padding in sections */
+  .py-24 {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  .py-20 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .py-16 {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  /* Horizontal padding on main containers */
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-5xl,
+  .max-w-4xl,
+  .max-w-3xl {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+  /* Navbar inner container on small screens */
+  nav > div {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Ensure footer columns stack cleanly (already grid-cols-1, just fix gap) */
+  footer .grid {
+    gap: 2rem !important;
+  }
+
+  /* Executive member modal max-height safety */
+  .max-h-\[90vh\] {
+    max-height: 92vh !important;
+  }
+}
+
+/* ── 480px and below (phones) ── */
+@media (max-width: 480px) {
+  /* Hero logo — override fixed h-[210px] */
+  .h-\[210px\] {
+    height: 130px !important;
+  }
+
+  /* Reduce all h-screen sections' top padding */
+  .h-screen.flex.items-center {
+    min-height: 100svh;
+  }
+
+  /* Section heading sizes */
+  h1.text-4xl,
+  h2.text-4xl,
+  .text-4xl {
+    font-size: 1.75rem !important;
+    line-height: 1.25 !important;
+  }
+
+  h1.text-3xl,
+  h2.text-3xl,
+  .text-3xl {
+    font-size: 1.4rem !important;
+    line-height: 1.3 !important;
+  }
+
+  h1.text-2xl,
+  h2.text-2xl,
+  .text-2xl {
+    font-size: 1.25rem !important;
+  }
+
+  /* Card padding reduction */
+  .p-8 {
+    padding: 1.25rem !important;
+  }
+
+  .p-10 {
+    padding: 1.25rem !important;
+  }
+
+  .p-7 {
+    padding: 1rem !important;
+  }
+
+  /* Stats grid: keep 2 columns */
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Executive slider quote icon */
+  .h-16.w-16 {
+    height: 2.5rem !important;
+    width: 2.5rem !important;
+  }
+
+  /* Executive slider: large italic message text */
+  .text-xl {
+    font-size: 0.9375rem !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Executive slider: author info — wrap on small screens */
+  .flex.items-center.justify-center.gap-4 {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+
+  /* Message-From-President: shrink decorative quote SVGs */
+  .absolute.-left-6 > svg,
+  .absolute.-right-6 > svg {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  /* Prevent decorative marks causing overflow */
+  .absolute.-left-6 {
+    left: -0.25rem !important;
+    top: -1rem !important;
+  }
+
+  .absolute.-right-6 {
+    right: -0.25rem !important;
+    bottom: -1rem !important;
+  }
+
+  /* Events regular activities: stack row content */
+  .flex.items-center.justify-between.gap-6 {
+    flex-wrap: wrap !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Registration page: wrap icon + h1 header */
+  .flex.items-center.justify-center.gap-3 {
+    flex-wrap: wrap !important;
+    text-align: center !important;
+  }
+
+  /* Form grids: always stack on mobile */
+  .grid.gap-6 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Executive modal: nearly full screen */
+  .max-w-2xl.w-full {
+    width: 100% !important;
+    margin: 0.5rem !important;
+  }
+}
+
+/* ── 414px (iPhone Plus / Android XL) ── */
+@media (max-width: 414px) {
+  .h-\[210px\] {
+    height: 120px !important;
+  }
+
+  /* Section padding tighter */
+  .py-24 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .py-20 {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+}
+
+/* ── 375px and below (iPhone, many Android) ── */
+@media (max-width: 375px) {
+  .h-\[210px\] {
+    height: 110px !important;
+  }
+
+  /* Sub-compact padding */
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-5xl,
+  .max-w-4xl,
+  .max-w-3xl {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  nav > div {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  footer .flex.items-center.gap-5 {
+    gap: 0.625rem !important;
+  }
+}
+
+/* ── 320px (minimum supported width) ── */
+@media (max-width: 320px) {
+  .h-\[210px\] {
+    height: 90px !important;
+  }
+
+  /* Forced word-wrap to prevent overflow on very narrow screens */
+  h1, h2, h3, h4, p, span, a, button, li {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .text-4xl {
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .text-3xl {
+    font-size: 1.25rem !important;
+  }
+
+  .py-24 {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  .py-20 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+}
