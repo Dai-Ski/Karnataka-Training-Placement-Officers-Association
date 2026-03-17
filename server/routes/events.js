@@ -36,7 +36,10 @@ router.delete('/:id', async (req, res) => {
 // POST /api/admin/login
 router.post('/admin/login', (req, res) => {
   const { id, password } = req.body;
-  if (id === 'ktpoa' && password === 'ktpoa@2025') {
+  const adminId = process.env.ADMIN_ID || 'ktpoa';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'ktpoa@2025';
+
+  if (id === adminId && password === adminPassword) {
     res.json({ success: true, message: 'Login successful' });
   } else {
     res.status(401).json({ success: false, message: 'Invalid credentials' });
