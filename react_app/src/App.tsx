@@ -10,11 +10,16 @@ import { TPORegistrationPage } from "@/pages/Registration/TPO";
 import { IndustryRegistrationPage } from "@/pages/Registration/Industry";
 import { StudentRegistrationPage } from "@/pages/Registration/Student";
 import { ExecutiveMembersPage } from "@/pages/ExecutiveMembers";
+import { AdminLoginPage } from "@/pages/Admin/Login";
+import { AdminDashboardPage } from "@/pages/Admin/Dashboard";
 import { Toaster } from "@/components/ui/sonner";
 import { motion, AnimatePresence } from "motion/react";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(
+    localStorage.getItem("admin_auth") === "true"
+  );
 
   const handleNavigation = (page: string) => {
     if (page === "pillars") {
@@ -53,6 +58,9 @@ export default function App() {
           window.scrollTo({ top: y, behavior: "smooth" });
         }
       }, 300);
+    } else if (page === "admin") {
+      setCurrentPage("admin");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       setCurrentPage(page);
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -95,6 +103,9 @@ export default function App() {
       "industry-registration": IndustryRegistrationPage,
       "student-registration": StudentRegistrationPage,
       "executive-members": ExecutiveMembersPage,
+      admin: isAdminAuthenticated ? AdminDashboardPage : () => (
+        <AdminLoginPage onLogin={() => setIsAdminAuthenticated(true)} />
+      ),
     };
 
     const PageComponent = pages[currentPage] || HomePage;

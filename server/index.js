@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./db');
 const registrationRoutes = require('./routes/registrations');
 const otpRoutes = require('./routes/otp');
+const eventRoutes = require('./routes/events');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -18,6 +19,7 @@ app.use(express.json());
 // Routes
 app.use('/api/register', registrationRoutes);
 app.use('/api/otp', otpRoutes);
+app.use('/api/events', eventRoutes);
 
 // Health check
 app.get('/api/health', (_req, res) => {
