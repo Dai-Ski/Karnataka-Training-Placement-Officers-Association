@@ -45,6 +45,9 @@ router.post('/send', async (req, res) => {
   otpStore.set(email.toLowerCase(), { otp, expiresAt });
 
   try {
+    if (!resend) {
+      throw new Error('Email service is not configured (RESEND_API_KEY missing).');
+    }
     const { data, error } = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'KTPOA <info@ktpoa.org>',
       to: [email],
