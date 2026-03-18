@@ -110,8 +110,8 @@ export function Navbar({
           })}
         </div>
 
-        {/* CTA Button */}
-        <div className="hidden md:block">
+        {/* CTA Button — desktop only */}
+        <div className="hidden lg:block">
           <button
             onClick={() => handleNavClick("registration")}
             className="px-6 py-2 bg-[#EAB308] hover:bg-[#FACC15] text-[#0F172A] font-bold rounded-md text-sm transition-all duration-200 shadow-sm"
@@ -120,8 +120,8 @@ export function Navbar({
           </button>
         </div>
 
-        {/* Mobile Hamburger */}
-        <div className="md:hidden">
+        {/* Mobile / Tablet Hamburger */}
+        <div className="lg:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="text-white p-2"
@@ -131,9 +131,9 @@ export function Navbar({
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile / Tablet Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-[#0F172A] border-t border-white/10">
+        <div className="lg:hidden bg-[#0F172A] border-t border-white/10">
           <div className="px-4 py-4 space-y-1">
             {navItems.map((item) => {
               const isActive =
