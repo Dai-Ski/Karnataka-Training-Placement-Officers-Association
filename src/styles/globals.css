@@ -360,10 +360,10 @@ body {
 /* ----------------------------------------------------------
    2. STICKY NAV — CSS SAFETY NET
    Even if the JS scroll-hide logic fires, force the
-   navbar to stay on-screen on mobile via CSS.
+   navbar to stay on-screen on mobile/tablet via CSS.
    This works alongside the JS fix in Navbar.tsx.
    ---------------------------------------------------------- */
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   nav.fixed {
     /* Counteract any -translate-y-full applied by JS */
     transform: translateY(0) !important;
@@ -375,6 +375,27 @@ body {
     z-index: 9999 !important;
     /* Logo stays on left, hamburger on right */
     width: 100% !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   2a. TABLET NAV SAFETY NET (769px – 1023px)
+   Cover the gap between the mobile CSS block and desktop.
+   ---------------------------------------------------------- */
+@media (min-width: 769px) and (max-width: 1023px) {
+  /* Navbar inner row — consistent padding on tablets */
+  nav > div {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Sections should not overflow horizontally on tablets */
+  section {
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
