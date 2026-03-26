@@ -8,9 +8,21 @@ const TPO = require('../models/TPO');
 const Industry = require('../models/Industry');
 
 // Auth setup
+const getPrivateKey = () => {
+  if (!process.env.GOOGLE_PRIVATE_KEY_BASE64) return null;
+  try {
+    const decoded = Buffer.from(process.env.GOOGLE_PRIVATE_KEY_BASE64, 'base64').toString('utf8');
+    // Ensure literal \n are converted to actual newlines (Render sometimes escapes them)
+    return decoded.replace(/\\n/g, '\n');
+  } catch (e) {
+    console.error('Failed to decode private key:', e);
+    return null;
+  }
+};
+
 const serviceAccountAuth = new JWT({
   email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-  key: Buffer.from(process.env.GOOGLE_PRIVATE_KEY_BASE64, 'base64').toString('utf8'),
+  key: getPrivateKey(),
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 

@@ -1,82 +1,109 @@
-# __***Karnataka Training & Placement Officers Association (KTPOA)***__
+# KTPOA Platform - Karnataka Training & Placement Officers Association
 
-### ***Empowering Students. Strengthening Industry Connections.***
+### Empowering Students. Strengthening Industry Connections.
 
-The __***Karnataka Training & Placement Officers Association (KTPOA)***__ is dedicated to empowering students through **skill development**, **industry collaboration**, and **placement initiatives** across Karnataka.
-
-KTPOA serves as a vital bridge between ***academia*** and ***industry***, helping institutions prepare students for real-world careers while enabling companies to connect with skilled and capable graduates.
+This repository contains the official web platform for the **Karnataka Training & Placement Officers Association (KTPOA)**. The platform is designed to manage flagship events, student-centric initiatives, and streamline administrative workflows through a dynamic, database-driven architecture.
 
 ---
 
-## __***About KTPOA***__
+## 🚀 Key Features
 
-The __***Karnataka Training & Placement Officers Association (KTPOA)***__ is a collaborative network of **Training and Placement Officers** from institutions across Karnataka.
+### 📅 Dynamic Event Management
+- **Full CRUD Support**: Manage all upcoming and flagship events via a secure Admin Dashboard.
+- **Categorized Content**: Events are organized into *Flagship*, *Student-Centric*, and *Regular* sections.
+- **Icon Management**: Visual icon picker using Lucide for consistent branding.
+- **Structured Highlights**: Support for bulleted lists and detailed event locations/dates.
 
-Our focus is to strengthen the employability ecosystem by fostering cooperation between educational institutions and industry leaders.
+### 📊 Secure User Data Export
+- **Google Sheets Integration**: One-click export of all registered Students, TPOs, and Industry partners.
+- **Multi-Tab Organization**: Data is automatically siloed into categorized tabs.
+- **Data Integrity**: Automatic deduplication and clearing of existing sheet data before every export.
+- **Service Account Security**: Authorized via Google Service Account with Base64-encoded PEM keys.
 
-Through collective efforts, KTPOA works to ensure students receive the training, exposure, and opportunities necessary to succeed in today’s competitive job market.
-
----
-
-## __***Objectives***__
-
-- ***Enhance student employability*** through structured training programs  
-- ***Strengthen industry-academia collaboration***  
-- ***Facilitate placement opportunities*** for students across institutions  
-- ***Encourage knowledge sharing*** among Training & Placement Officers  
-- ***Support skill development initiatives*** aligned with industry demands  
-
----
-
-## __***Key Initiatives***__
-
-KTPOA actively works on initiatives that help students and institutions stay aligned with evolving industry requirements.
-
-Some of the key initiatives include:
-
-- Industry interaction programs  
-- Skill development workshops and seminars  
-- Collaborative campus recruitment drives  
-- Internship and career opportunity facilitation  
-- Technology-driven platforms for placement coordination  
+### 🔐 Multi-Role Security
+- **Admin Dashboard**: Protected by rate-limited login and environment-driven credentials.
+- **OTP Verification**: Secure registration flows for all user types.
 
 ---
 
-## __***Technology & Digital Initiatives***__
+## 🛠️ Tech Stack
 
-This repository supports the development of digital platforms and tools that enhance KTPOA’s mission.
-
-Possible initiatives include:
-
-- Placement coordination platforms  
-- Event and training management systems  
-- Student opportunity portals  
-- Industry collaboration tools  
-
-These initiatives aim to streamline communication and improve opportunities for students across Karnataka.
+- **Frontend**: React (Vite), Tailwind CSS, Lucide Icons, Sonner (Toasts)
+- **Backend**: Node.js, Express, Mongoose (MongoDB)
+- **APIs**: Google Sheets API v4, Google Drive API v3 (via `google-spreadsheet`)
+- **Email**: Resend API
 
 ---
 
-## __***Contributing***__
+## ⚙️ Environment Variables
 
-We welcome contributions that support KTPOA’s mission of empowering students and improving placement ecosystems.
+### Backend (`server/.env`)
+| Key | Description |
+| :--- | :--- |
+| `MONGODB_URI` | MongoDB Atlas Connection String |
+| `RESEND_API_KEY` | Resend API Key |
+| `RESEND_FROM_EMAIL` | Authorized sender email (e.g. `info@ktpoa.org`) |
+| `ADMIN_ID` | Admin Login ID |
+| `ADMIN_PASSWORD` | Admin Login Password |
+| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | Google Service Account Email |
+| `GOOGLE_PRIVATE_KEY_BASE64` | Base64-encoded private key (Quoted single-line) |
+| `GOOGLE_SHEET_ID` | Target Google Sheet ID for exports |
 
-You can contribute by:
-
-- Improving documentation  
-- Suggesting new features  
-- Enhancing existing platforms  
-- Fixing issues or bugs  
-
-Contributions help strengthen the ecosystem for students, institutions, and industry partners.
+### Frontend (`react_app/.env`)
+| Key | Description |
+| :--- | :--- |
+| `VITE_API_URL` | Base URL for the backend API (e.g. `http://localhost:5000/api`) |
 
 ---
 
-## __***Contact***__
+## 📦 Installation & Local Setup
 
-__***Karnataka Training & Placement Officers Association (KTPOA)***__
+### 1. Clone the repository
+```bash
+git clone https://github.com/Dai-Ski/Karnataka-Training-Placement-Officers-Association.git
+cd Karnataka-Training-Placement-Officers-Association
+```
 
-Building stronger career opportunities by connecting **education**, **skills**, and **industry**.
+### 2. Setup Backend
+```bash
+cd server
+npm install
+# Create .env based on the table above
+npm run dev
+```
 
-For collaboration or inquiries, please reach out through official KTPOA communication channels.
+### 3. Setup Frontend
+```bash
+cd react_app
+npm install
+# Create .env with VITE_API_URL=http://localhost:5000/api
+npm run dev
+```
 
+---
+
+## 🌍 Deployment
+
+### **Backend (Render)**
+1. Connect your GitHub repository.
+2. Set the Build Command: `npm install`
+3. Set the Start Command: `npm start`
+4. Add all environment variables in the **Settings > Environment Variables** tab.
+
+### **Frontend (Vercel)**
+1. Import the repository and select the `react_app` directory as the root.
+2. Framework Preset: **Vite**.
+3. Add `VITE_API_URL` pointing to your Render backend (e.g. `https://your-api.onrender.com/api`).
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please fork the repository and submit a pull request for any enhancements or bug fixes.
+
+---
+
+## 📬 Contact
+
+**Karnataka Training & Placement Officers Association (KTPOA)**  
+Building stronger career opportunities by connecting education, skills, and industry.
