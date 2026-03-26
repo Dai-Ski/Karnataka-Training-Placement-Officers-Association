@@ -15,6 +15,7 @@ import {
   CheckCircle,
   Bell,
   MapPin,
+  Tag,
 } from "lucide-react";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
@@ -45,144 +46,48 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
     fetchEvents();
   }, []);
 
-  const flagshipEvents = events.filter(e => e.section === 'flagship').length > 0 
-    ? events.filter(e => e.section === 'flagship').map(e => ({
-        ...e,
-        icon: e.icon === 'Mic' ? Mic : e.icon === 'Users' ? Users : e.icon === 'Award' ? Award : ClipboardList
-      }))
-    : [
-    {
-      title: "Karnataka Placement Conclave",
-      icon: ClipboardList,
-      description:
-        "A state-level annual gathering of placement officers, HR leaders, and institutional heads focused on emerging recruitment trends.",
-      highlights: [
-        "Expert keynote sessions",
-        "Panel discussions on future of work",
-        "Networking opportunities",
-        "Best practices showcase",
-      ],
-    },
-    {
-      title: "Industry–Academia Summit",
-      icon: Mic,
-      description:
-        "An interactive forum for policy discussions, skill alignment, and hiring outlook analysis.",
-      highlights: [
-        "Policy roundtables",
-        "Skill gap analysis",
-        "Industry trend presentations",
-        "Collaborative workshops",
-      ],
-    },
-    {
-      title: "Recruiters Meet",
-      icon: Users,
-      description:
-        "A centralized networking platform connecting recruiters with multiple institutions under one umbrella.",
-      highlights: [
-        "Multi-institution engagement",
-        "Direct recruiter access",
-        "Recruitment drive coordination",
-        "Talent pool showcasing",
-      ],
-    },
-    {
-      title: "Placement Excellence Awards",
-      icon: Award,
-      description:
-        "Recognition for Best Placement Officer, Best Emerging Institution, Outstanding Industry Partner and more.",
-      highlights: [
-        "Multiple award categories",
-        "Peer-nominated recognition",
-        "Best practice awards",
-        "Innovation spotlights",
-      ],
-    },
-  ];
+  const getIcon = (iconName: string) => {
+    const icons: Record<string, any> = {
+      Mic,
+      Users,
+      Award,
+      Briefcase,
+      GraduationCap,
+      ClipboardList,
+      Calendar
+    };
+    return icons[iconName] || Calendar;
+  };
 
-  const upcomingEvents = events.filter(e => e.section === 'upcoming').length > 0
-    ? events.filter(e => e.section === 'upcoming')
-    : [
-    {
-      date: "March 15-16, 2026",
-      title: "Karnataka Placement Conclave 2026",
-      location: "Bengaluru",
-      status: "Registration Open",
-      type: "Flagship Event",
-    },
-    {
-      date: "April 22, 2026",
-      title: "Regional TPO Workshop - North Karnataka",
-      location: "Hubballi",
-      status: "Coming Soon",
-      type: "Workshop",
-    },
-    {
-      date: "May 10, 2026",
-      title: "Industry-Academia Summit",
-      location: "Mysuru",
-      status: "Save the Date",
-      type: "Summit",
-    },
-  ];
+  const flagshipEvents = events
+    .filter((e) => e.section === "flagship")
+    .map((e) => ({
+      ...e,
+      icon: getIcon(e.icon),
+    }));
 
-  const studentInitiatives = events.filter(e => e.section === 'student').length > 0
-    ? events.filter(e => e.section === 'student').map(e => ({
-        ...e,
-        icon: e.icon === 'Users' ? Users : e.icon === 'Briefcase' ? Briefcase : GraduationCap,
-        items: e.highlights
-      }))
-    : [
-    {
-      title: "Career Readiness Program",
-      icon: GraduationCap,
-      items: [
-        "Resume building workshops",
-        "Mock interviews",
-        "Group discussion training",
-        "Corporate etiquette sessions",
-      ],
-    },
-    {
-      title: "Industry Mentorship Program",
-      icon: Users,
-      description:
-        "Pairing students with industry mentors for career guidance and professional exposure.",
-    },
-    {
-      title: "Internship Facilitation Drive",
-      icon: Briefcase,
-      description:
-        "Connecting institutions with companies offering structured internship opportunities.",
-    },
-  ];
+  const upcomingEvents = events
+    .filter((e) => e.section === "upcoming")
+    .map((e) => ({
+      ...e,
+      icon: getIcon(e.icon),
+    }));
 
-  const regularActivities = events.filter(e => e.section === 'regular').length > 0
-    ? events.filter(e => e.section === 'regular').map(e => ({
-        ...e,
-        frequency: e.type // Use type as frequency for regular events
-      }))
-    : [
-    {
-      title: "Regional Industry Meets",
-      description:
-        "Localized networking forums to strengthen district-level collaborations.",
-      frequency: "Quarterly",
-    },
-    {
-      title: "Training & Certification Programs",
-      description:
-        "Skill enhancement programs for students and placement teams.",
-      frequency: "Monthly",
-    },
-    {
-      title: "Knowledge Exchange Forums",
-      description:
-        "Panel discussions and workshops focused on recruitment strategies and employability metrics.",
-      frequency: "Bi-monthly",
-    },
-  ];
+  const studentInitiatives = events
+    .filter((e) => e.section === "student")
+    .map((e) => ({
+      ...e,
+      icon: getIcon(e.icon),
+      items: e.highlights,
+    }));
+
+  const regularActivities = events
+    .filter((e) => e.section === "regular")
+    .map((e) => ({
+      ...e,
+      icon: getIcon(e.icon),
+      frequency: e.type, // Use type as frequency for regular events
+    }));
 
   return (
     <div className="bg-white">
@@ -228,7 +133,7 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
                     <p className="text-gray-600 mb-4">
                       {event.description}
                     </p>
-                    {event.highlights && (
+                    {event.highlights && event.highlights.length > 0 && (
                       <div className="mt-4">
                         <p className="text-sm font-semibold text-gray-800 mb-2">
                           Key Highlights:
@@ -296,7 +201,7 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
                     </div>
                     <div className="flex items-start gap-4 mb-4">
                       <div className="flex-shrink-0 gradient-gold p-3 rounded-lg">
-                        <Calendar className="h-6 w-6 text-black" />
+                        <event.icon className="h-6 w-6 text-black" />
                       </div>
                       <div className="flex-1">
                         <p className="text-sm text-[hsl(var(--gold))] font-semibold mb-2">
@@ -358,10 +263,15 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
                       </CardTitle>
                     </div>
                   </CardHeader>
-                  <CardContent>
-                    {initiative.items ? (
+                  <CardContent className="space-y-4">
+                    {initiative.description && (
+                      <p className="text-sm text-gray-700">
+                        {initiative.description}
+                      </p>
+                    )}
+                    {initiative.items && initiative.items.length > 0 && (
                       <div>
-                        <p className="text-sm text-gray-700 mb-3">
+                        <p className="text-sm font-semibold text-gray-900 mb-2">
                           A structured framework including:
                         </p>
                         <ul className="space-y-2">
@@ -378,10 +288,6 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
                           ))}
                         </ul>
                       </div>
-                    ) : (
-                      <p className="text-sm text-gray-700">
-                        {initiative.description}
-                      </p>
                     )}
                   </CardContent>
                 </Card>
@@ -416,7 +322,7 @@ export function EventsPage({ onNavigate }: EventsPageProps) {
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-xl flex items-center gap-3">
                       <div className="w-10 h-10 gradient-gold rounded-full flex items-center justify-center">
-                        <Calendar className="h-5 w-5 text-black" />
+                        <activity.icon className="h-5 w-5 text-black" />
                       </div>
                       {activity.title}
                     </CardTitle>
