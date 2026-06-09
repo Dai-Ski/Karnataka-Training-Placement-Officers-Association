@@ -33,15 +33,3 @@ This repository contains the official web platform for the **Karnataka Training 
 - **APIs**: Google Sheets API v4, Google Drive API v3 (via `google-spreadsheet`)
 - **Email**: Resend API
 
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please fork the repository and submit a pull request for any enhancements or bug fixes.
-
----
-
-## 📬 Contact
-
-**Karnataka Training & Placement Officers Association (KTPOA)**  
-Building stronger career opportunities by connecting education, skills, and industry.
