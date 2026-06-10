@@ -5,6 +5,7 @@ import {
   Mail,
   Phone,
   MapPin,
+  Github,
 } from "lucide-react";
 
 const logoImage = '/images/2135abd8723dc81edc9e85faf50aaf699dee149d.png';
@@ -142,10 +143,55 @@ export function Footer({ onNavigate }: FooterProps) {
             <p className="text-slate-400 text-sm">
               © 2026 Karnataka Training &amp; Placement Officers Association. All Rights Reserved.
             </p>
+            {/* Created By Section */}
+            <div className="mt-2 text-slate-500 text-xs flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+              <div className="flex items-center gap-2">
+                <span>Created by Ado</span>
+                <a
+                  href="https://www.linkedin.com/in/daiski"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-400 hover:text-[#0A66C2] transition-colors"
+                  aria-label="Ado LinkedIn"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </a>
+                <a
+                  href="https://github.com/Dai-Ski"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-400 hover:text-white transition-colors"
+                  aria-label="Ado GitHub"
+                >
+                  <Github className="h-4 w-4" />
+                </a>
+              </div>
+              <span className="hidden sm:inline text-slate-700">|</span>
+              <div className="flex items-center gap-2">
+                <span>Abhishek Saini</span>
+                <a
+                  href="https://www.linkedin.com/in/abhisheksaini-dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-400 hover:text-[#0A66C2] transition-colors"
+                  aria-label="Abhishek Saini LinkedIn"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </a>
+                <a
+                  href="https://github.com/OMEGA-5656"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-400 hover:text-white transition-colors"
+                  aria-label="Abhishek Saini GitHub"
+                >
+                  <Github className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
     </footer>
   );
 }
