@@ -1,52 +1,36 @@
-import React, { useId } from 'react';
-const quoteImage = '/images/f9d3a753d38cf650f178946c76e94b9d31070108.png';
+import { useId } from "react";
 
 interface QuotationMarkProps {
-  orientation?: 'opening' | 'closing';
   className?: string;
-  size?: number;
 }
 
-export function QuotationMark({ 
-  orientation = 'opening', 
-  className = '',
-  size = 120 
+export function QuotationMark({
+  className = "",
 }: QuotationMarkProps) {
-  const filterId = useId().replace(/:/g, '');
-  
+  const idValue = useId().replace(/[:]/g, "id-");
+  const gradientId = `quote-gradient-${idValue}`;
+
   return (
-    <>
-      <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
-        <defs>
-          <filter id={`black-to-gold-${filterId}`} colorInterpolationFilters="sRGB">
-            <feColorMatrix type="matrix" values="
-              0.2118 0 0 0 0.7882
-              0.3412 0 0 0 0.6588
-              0.5608 0 0 0 0.4392
-              0 0 0 1 0
-            " />
-          </filter>
-        </defs>
-      </svg>
-      <img
-        src={quoteImage}
-        alt="Quotation Mark"
-        className={className}
-        style={{
-          transform: orientation === 'closing' 
-            ? 'scale(0.85) scaleX(-1) scaleY(-1)' 
-            : 'scale(0.85) translateX(5%)',
-          filter: `url(#black-to-gold-${filterId})`,
-          objectFit: 'contain',
-          width: size,
-          height: size,
-          opacity: 0.6,
-          marginTop: '0px',
-          marginRight: '0px',
-          marginBottom: '0px',
-          marginLeft: '-5px',
-        }}
-      />
-    </>
+    <svg 
+      className={className}
+      viewBox="0 0 100 100" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#EADDC7" />
+          <stop offset="100%" stopColor="#C9A870" />
+        </linearGradient>
+      </defs>
+      
+      {/* Refined Hollow Quotes - Matching Screenshot */}
+      <g stroke={`url(#${gradientId})`} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+        {/* Left Mark */}
+        <path d="M40 35c0-10-15-10-15 0 0 15 15 20 15 35" />
+        {/* Right Mark */}
+        <path d="M70 35c0-10-15-10-15 0 0 15 15 20 15 35" />
+      </g>
+    </svg>
   );
 }
