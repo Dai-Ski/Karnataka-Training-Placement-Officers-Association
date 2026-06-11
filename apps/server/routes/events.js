@@ -66,7 +66,11 @@ router.put('/:id', async (req, res) => {
 router.post('/admin/login', loginLimiter, (req, res) => {
   const { id, password } = req.body;
   const adminId = process.env.ADMIN_ID || 'ktpoa';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'ktpoa@2025';
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (!adminPassword) {
+    return res.status(500).json({ success: false, message: 'Admin authentication is not configured on the server.' });
+  }
 
   if (id === adminId && password === adminPassword) {
     res.json({ success: true, message: 'Login successful' });
